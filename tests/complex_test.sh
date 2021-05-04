@@ -19,7 +19,7 @@ echo "Complex test..."
 declare -r INCLUDE="../lib/include"
 declare -r LIBC="../lib/libc.a"
 # FIXME(mbrukman): this is macOS-specific; figure out Linux equivalent.
-declare -r LIBSYSTEM="/usr/lib/libSystem.dylib"
+declare -r XCODE_USR_LIB="/Applications/Xcode_12.5.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib"
 
 declare -r SRC="complex_test.c"
 declare -r OBJ="complex_test.o"
@@ -36,7 +36,8 @@ function run_complex_test() {
   ../clang.sh "-I${INCLUDE}" -DREAL="${real}" -DIMAG="${imag}" "${SRC}" -c -o "${OBJ}"
 
   # Link
-  ld -arch x86_64 -execute "${OBJ}" "${LIBC}" "${LIBSYSTEM}" -o "${EXE}"
+  # FIXME(mbrukman): this is macOS-specific; figure out Linux equivalent.
+  ld -arch x86_64 -execute "${OBJ}" "${LIBC}" -lSystem -L"${XCODE_USR_LIB}" -o "${EXE}"
 
   # Run
   ./"${EXE}"
