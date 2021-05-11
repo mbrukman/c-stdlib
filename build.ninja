@@ -1,0 +1,58 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+libc = lib/include
+clang-args =
+clang-cflags = -fno-builtin -nostdlib -std=c99 -I$libc -Wall
+Xcode_Version = 12.5
+Xcode_UsrLib = /Applications/Xcode_${Xcode_Version}.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
+
+rule clang
+  depfile = $out.d
+  command = clang -MD -MF $out.d ${clang-cflags} ${clang-args} -c $in -o $out
+
+rule ar
+  command = ar -crs $out $in
+
+rule ld-mac
+  command = ld -arch x86_64 -execute $in -lSystem -L${Xcode_UsrLib} -o $out
+
+build lib/complex.o: clang lib/complex.c
+build lib/libc.a: ar lib/complex.o
+
+rule exit_with_status_code
+  command = tests/exit_with_status_code.sh ${expected-status} ${subcommand}
+
+# Run complex_test (real=2, imaginary=5)
+build tests/complex_test_2_5.o: clang tests/complex_test.c
+  clang-args = -DREAL=2 -DIMAG=5
+
+build tests/complex_test_2_5: ld-mac tests/complex_test_2_5.o lib/libc.a
+
+build run_complex_test_2_5: exit_with_status_code tests/complex_test_2_5
+  expected-status = 7
+  subcommand = tests/complex_test_2_5
+
+# Run complex_test (real=3, imaginary=8)
+build tests/complex_test_3_8.o: clang tests/complex_test.c
+  clang-args = -DREAL=3 -DIMAG=8
+
+build tests/complex_test_3_8: ld-mac tests/complex_test_3_8.o
+
+build run_complex_test_3_8: exit_with_status_code tests/complex_test_3_8
+  expected-status = 11
+  subcommand = tests/complex_test_3_8
+
+# Run all tests
+build test: phony | run_complex_test_2_5 run_complex_test_3_8

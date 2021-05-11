@@ -14,6 +14,14 @@
 
 #include <complex.h>
 
+#ifndef REAL
+# error "Must #define REAL (integer) before compiling this file."
+#endif
+
+#ifndef IMAG
+# error "Must #define IMAG (integer) before compiling this file."
+#endif
+
 int main(int argc, char* argv[]) {
   // Technically, this style of initializing a complex value is an extension
   // and is not part of the C99 standard; compiling with `clang -pedantic` will

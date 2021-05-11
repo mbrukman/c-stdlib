@@ -1,2 +1,11 @@
-*.o
+# Temporary editor files
+*.sw?
+*~
+
+# Built outputs
 *.a
+*.o
+*.o.d
+.ninja_log
+tests/complex_test_2_5
+tests/complex_test_3_8
