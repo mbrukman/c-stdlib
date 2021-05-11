@@ -1,3 +1,6 @@
+# Symlink to appropriate version of Xcode.app in /Applications (macOS only)
+Xcode
+
 # Temporary editor files
 *.sw?
 *~
