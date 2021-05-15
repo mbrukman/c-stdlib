@@ -28,6 +28,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Show Clang version
+        run: clang --version
+
       - name: Download Ninja
         run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip
 
@@ -46,6 +49,9 @@ jobs:
 
       - name: Create symlink to Xcode
         run: ln -s /Applications/Xcode_12.4.app Xcode
+
+      - name: Show Clang version
+        run: clang --version
 
       - name: Download Ninja
         run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-mac.zip
