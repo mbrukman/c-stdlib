@@ -28,6 +28,7 @@
 
 // TODO(mbrukman): this function definition is not complete as we are not
 // handling all the relevant cleanup operations that need to happen here.
+__attribute__((used))
 void exit(int status) {
 #if defined(__linux__) && defined(__LP64__)
   const unsigned long sys_exit_group = 231;
