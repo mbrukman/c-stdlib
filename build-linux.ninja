@@ -15,28 +15,21 @@
 libc = lib/include
 clang-args =
 clang-cflags = -fno-builtin -nostdlib -std=c99 -I$libc -Wall
-# Note: you need to add a symlink in the local directory that points to the
-# appropriate version of Xcode you want to use; e.g.:
-#
-#     $ ln -s /Applications/Xcode_12.5.app Xcode
-#
-# Since `ninja` doesn't accept flags nor does a `build.ninja` read from
-# environment variables, we need a level of indirection to be able to substitute
-# different versions of Xcode locally vs. what's used in GitHub Actions.
-Xcode_UsrLib = Xcode/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
 
 rule clang
   depfile = $out.d
-  command = clang -MD -MF $out.d ${clang-cflags} ${clang-args} -c $in -o $out
+  command = clang -O2 -MD -MF $out.d ${clang-cflags} ${clang-args} -c $in -o $out
 
 rule ar
   command = ar -crs $out $in
 
-rule ld-mac
-  command = ld -arch x86_64 -execute $in -lSystem -L${Xcode_UsrLib} -o $out
+rule ld
+  command = ld $in lib/libc.a -o $out
 
 build lib/complex.o: clang lib/complex.c
-build lib/libc.a: ar lib/complex.o
+build lib/crt0.o: clang lib/crt0.c
+build lib/stdlib.o: clang lib/stdlib.c
+build lib/libc.a: ar lib/complex.o lib/crt0.o lib/stdlib.o
 
 rule exit_with_status_code
   command = tests/exit_with_status_code.sh ${expected-status} ${subcommand}
@@ -45,7 +38,7 @@ rule exit_with_status_code
 build tests/complex_test_2_5.o: clang tests/complex_test.c
   clang-args = -DREAL=2 -DIMAG=5
 
-build tests/complex_test_2_5: ld-mac tests/complex_test_2_5.o lib/libc.a
+build tests/complex_test_2_5: ld tests/complex_test_2_5.o lib/libc.a
 
 build run_complex_test_2_5: exit_with_status_code tests/complex_test_2_5
   expected-status = 7
@@ -55,7 +48,7 @@ build run_complex_test_2_5: exit_with_status_code tests/complex_test_2_5
 build tests/complex_test_3_8.o: clang tests/complex_test.c
   clang-args = -DREAL=3 -DIMAG=8
 
-build tests/complex_test_3_8: ld-mac tests/complex_test_3_8.o
+build tests/complex_test_3_8: ld tests/complex_test_3_8.o
 
 build run_complex_test_3_8: exit_with_status_code tests/complex_test_3_8
   expected-status = 11
