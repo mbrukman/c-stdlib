@@ -55,7 +55,7 @@ build run_complex_test_2_5: exit_with_status_code tests/complex_test_2_5
 build tests/complex_test_3_8.o: clang tests/complex_test.c
   clang-args = -DREAL=3 -DIMAG=8
 
-build tests/complex_test_3_8: ld tests/complex_test_3_8.o
+build tests/complex_test_3_8: ld tests/complex_test_3_8.o lib/libc.a
 
 build run_complex_test_3_8: exit_with_status_code tests/complex_test_3_8
   expected-status = 11
