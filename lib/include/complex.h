@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _COMPLEX_H_
-#define _COMPLEX_H_
+#ifndef _LIBC_COMPLEX_H_
+#define _LIBC_COMPLEX_H_
 
 typedef struct {
   float real, imag;
@@ -64,4 +64,4 @@ double creal(double complex z);
 float crealf(float complex z);
 long double creall(long double complex z);
 
-#endif /* _COMPLEX_H_ */
+#endif  // _LIBC_COMPLEX_H_
