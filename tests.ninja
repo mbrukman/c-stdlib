@@ -58,5 +58,13 @@ build tests/stdlib_test: link tests/stdlib_test.o lib/libc.a
 build run_stdlib_test: exit_with_status_code tests/stdlib_test
   subcommand = tests/stdlib_test
 
+# Run string_test
+build tests/string_test.o: compile tests/string_test.c
+
+build tests/string_test: link tests/string_test.o lib/libc.a
+
+build run_string_test: exit_with_status_code tests/string_test
+  subcommand = tests/string_test
+
 # Run all tests
-build test: phony | run_complex_test run_math_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test
+build test: phony | run_complex_test run_math_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test run_string_test
