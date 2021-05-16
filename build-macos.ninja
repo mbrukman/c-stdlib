@@ -36,7 +36,8 @@ rule ld
   command = ld -arch x86_64 -execute $in -lSystem -L${Xcode_UsrLib} -o $out
 
 build lib/complex.o: clang lib/complex.c
-build lib/libc.a: ar lib/complex.o
+build lib/math.o: clang lib/math.c
+build lib/libc.a: ar lib/complex.o lib/math.o
 
 expected-status = 0
 rule exit_with_status_code
@@ -50,5 +51,13 @@ build tests/complex_test: ld tests/complex_test.o lib/libc.a
 build run_complex_test: exit_with_status_code tests/complex_test
   subcommand = tests/complex_test
 
+# Run math_test
+build tests/math_test.o: clang tests/math_test.c
+
+build tests/math_test: ld tests/math_test.o lib/libc.a
+
+build run_math_test: exit_with_status_code tests/math_test
+  subcommand = tests/math_test
+
 # Run all tests
-build test: phony | run_complex_test
+build test: phony | run_complex_test run_math_test
