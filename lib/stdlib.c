@@ -26,6 +26,14 @@
 // * https://pubs.opengroup.org/onlinepubs/7908799/xsh/_exit.html
 // * https://stackoverflow.com/questions/46903180/syscall-implementation-of-exit
 
+// macOS references:
+//
+// * https://stackoverflow.com/questions/48845697/macos-64-bit-system-call-table
+// * https://stackoverflow.com/questions/11179400/basic-assembly-not-working-on-mac-x86-64lion
+// * https://opensource.apple.com/source/xnu/xnu-1504.3.12/bsd/kern/syscalls.master
+// * https://stackoverflow.com/questions/14307623/how-do-i-call-the-write-syscall-using-inline-assembler-in-gcc-under-macos-x
+// * https://stackoverflow.com/questions/47801580/can-i-do-ret-instruction-from-code-at-start-in-macos-linux
+
 // TODO(mbrukman): this function definition is not complete as we are not
 // handling all the relevant cleanup operations that need to happen here.
 __attribute__((used))
@@ -38,7 +46,15 @@ void exit(int status) {
         : // no outputs
         : "m" (sys_exit_group), "m" (status)
         : "rax", "rdi");
+#elif defined(__APPLE__)
+  const unsigned int sys_exit = (2 << 24) + 1;
+  __asm("movq %0, %%rax\n"
+        "movq %1, %%rdi\n"
+        "syscall"
+        : // no outputs
+        : "m" (sys_exit), "m" (status)
+        : "rax", "rdi");
 #else
-#  error "This OS is not 64-bit Linux (not yet supported)."
+#  error "This OS is not 64-bit Linux or macOS (not yet supported)."
 #endif
 }

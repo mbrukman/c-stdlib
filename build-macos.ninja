@@ -33,11 +33,13 @@ rule ar
   command = ar -crs $out $in
 
 rule ld
-  command = ld -arch x86_64 -execute $in -lSystem -L${Xcode_UsrLib} -o $out
+  command = ld -arch x86_64 -e __start $in -lSystem -L${Xcode_UsrLib} -o $out
 
 build lib/complex.o: clang lib/complex.c
+build lib/crt0.o: clang lib/crt0.c
 build lib/math.o: clang lib/math.c
-build lib/libc.a: ar lib/complex.o lib/math.o
+build lib/stdlib.o: clang lib/stdlib.c
+build lib/libc.a: ar lib/complex.o lib/crt0.o lib/math.o lib/stdlib.o
 
 expected-status = 0
 rule exit_with_status_code
