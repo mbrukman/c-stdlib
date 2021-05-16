@@ -13,7 +13,7 @@ are [plenty of options][c-std-libs] to choose from.
 
 ## References
 
-* [ISO C standard][iso-c-std]
+* [ISO C standard][iso-c-std] ([draft][c-std-draft])
 * [POSIX standard][posix-std]
 
 ## Build & test
@@ -55,6 +55,7 @@ merchantability, or fitness for a particular purpose.
 
 [c-std-libs]: https://en.wikipedia.org/wiki/C_standard_library#Implementations
 [iso-c-std]: http://www.iso-9899.info/wiki/The_Standard
+[c-std-draft]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
 [posix-std]: https://pubs.opengroup.org/onlinepubs/9699919799/
 [llvm-download]: https://releases.llvm.org/download.html
 [llvm-apt]: https://apt.llvm.org/
