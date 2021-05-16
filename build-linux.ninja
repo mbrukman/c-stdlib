@@ -31,28 +31,17 @@ build lib/crt0.o: clang lib/crt0.c
 build lib/stdlib.o: clang lib/stdlib.c
 build lib/libc.a: ar lib/complex.o lib/crt0.o lib/stdlib.o
 
+expected-status = 0
 rule exit_with_status_code
   command = tests/exit_with_status_code.sh ${expected-status} ${subcommand}
 
-# Run complex_test (real=2, imaginary=5)
-build tests/complex_test_2_5.o: clang tests/complex_test.c
-  clang-args = -DREAL=2 -DIMAG=5
+# Run complex_test
+build tests/complex_test.o: clang tests/complex_test.c
 
-build tests/complex_test_2_5: ld tests/complex_test_2_5.o lib/libc.a
+build tests/complex_test: ld tests/complex_test.o lib/libc.a
 
-build run_complex_test_2_5: exit_with_status_code tests/complex_test_2_5
-  expected-status = 7
-  subcommand = tests/complex_test_2_5
-
-# Run complex_test (real=3, imaginary=8)
-build tests/complex_test_3_8.o: clang tests/complex_test.c
-  clang-args = -DREAL=3 -DIMAG=8
-
-build tests/complex_test_3_8: ld tests/complex_test_3_8.o lib/libc.a
-
-build run_complex_test_3_8: exit_with_status_code tests/complex_test_3_8
-  expected-status = 11
-  subcommand = tests/complex_test_3_8
+build run_complex_test: exit_with_status_code tests/complex_test
+  subcommand = tests/complex_test
 
 # Run all tests
-build test: phony | run_complex_test_2_5 run_complex_test_3_8
+build test: phony | run_complex_test

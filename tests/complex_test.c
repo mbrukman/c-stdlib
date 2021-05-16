@@ -14,15 +14,7 @@
 
 #include <complex.h>
 
-#ifndef REAL
-# error "Must #define REAL (integer) before compiling this file."
-#endif
-
-#ifndef IMAG
-# error "Must #define IMAG (integer) before compiling this file."
-#endif
-
-int main(int argc, char* argv[]) {
+int creal_plus_cimag(int real, int imag) {
   // Technically, this style of initializing a complex value is an extension
   // and is not part of the C99 standard; compiling with `clang -pedantic` will
   // result in a warning:
@@ -39,6 +31,18 @@ int main(int argc, char* argv[]) {
   // That said, we'll need to take a shortcut here at least initially to be able
   // to test creal() and cimag() functions easily without having a functional
   // implementation of any other parts of the C99 standard library.
-  complex double i = REAL + IMAG * I;
-  return creal(i) + cimag(i);
+  complex double c = real + imag * I;
+  return creal(c) + cimag(c);
+}
+
+int main(int argc, char* argv[]) {
+  if (creal_plus_cimag(2, 5) != 7) {
+    return 1;
+  }
+
+  if (creal_plus_cimag(3, 8) != 11) {
+    return 1;
+  }
+
+  return 0;
 }
