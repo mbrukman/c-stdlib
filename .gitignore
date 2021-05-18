@@ -10,4 +10,4 @@ Xcode
 *.o
 *.o.d
 .ninja_*
-tests/complex_test
+tests/*_test
