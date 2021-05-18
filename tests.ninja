@@ -32,5 +32,13 @@ build tests/math_test: ld tests/math_test.o lib/libc.a
 build run_math_test: exit_with_status_code tests/math_test
   subcommand = tests/math_test
 
+# Run stdlib_test
+build tests/stdlib_test.o: clang tests/stdlib_test.c
+
+build tests/stdlib_test: ld tests/stdlib_test.o lib/libc.a
+
+build run_stdlib_test: exit_with_status_code tests/stdlib_test
+  subcommand = tests/stdlib_test
+
 # Run all tests
-build test: phony | run_complex_test run_math_test
+build test: phony | run_complex_test run_math_test run_stdlib_test
