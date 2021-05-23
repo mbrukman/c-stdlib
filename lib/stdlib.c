@@ -160,29 +160,40 @@ int atexit(void (*func)(void));
 // * https://stackoverflow.com/questions/14307623/how-do-i-call-the-write-syscall-using-inline-assembler-in-gcc-under-macos-x
 // * https://stackoverflow.com/questions/47801580/can-i-do-ret-instruction-from-code-at-start-in-macos-linux
 
+// Syscall mutates `rcx` and `r11`:
+//
+// * https://stackoverflow.com/questions/50571275/why-does-a-syscall-clobber-rcx-and-r11
+// * https://stackoverflow.com/questions/47983371/why-do-x86-64-linux-system-calls-modify-rcx-and-what-does-the-value-mean
+// * https://www.cs.fsu.edu/~langley/CNT5605/2017-Summer/assembly-example/assembly.html
+// * https://www.felixcloutier.com/x86/syscall
+
 // TODO(mbrukman): this function definition is not complete as we are not
 // handling all the relevant cleanup operations that need to happen here.
 __attribute__((used))
 void exit(int status) {
 #if defined(__linux__) && defined(__LP64__)
   const unsigned long sys_exit_group = 231;
-  __asm("movq %0, %%rax\n"
-        "movq %1, %%rdi\n"
-        "syscall"
+  __asm("syscall"
         : // no outputs
-        : "m" (sys_exit_group), "m" (status)
-        : "rax", "rdi");
+        : "a" (sys_exit_group), "D" (status)
+        : "rcx", "r11");
 #elif defined(__APPLE__)
   const unsigned int sys_exit = (2 << 24) + 1;
-  __asm("movq %0, %%rax\n"
-        "movq %1, %%rdi\n"
-        "syscall"
+  __asm("syscall"
         : // no outputs
-        : "m" (sys_exit), "m" (status)
-        : "rax", "rdi");
+        : "a" (sys_exit), "D" (status)
+        : "rcx", "r11");
 #else
 #  error "This OS is not 64-bit Linux or macOS (not yet supported)."
 #endif
+
+  // Add an infinite loop to tell the compiler that this is a `noreturn`
+  // function; otherwise, we get a warning that we are returning from a
+  // no-return function. Since we call the `exit` syscall above, control should
+  // not reach here.
+  while (1) {
+    // Do nothing.
+  }
 }
 
 // 7.20.4.4 The _Exit function
