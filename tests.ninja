@@ -17,25 +17,25 @@ rule exit_with_status_code
   command = tests/exit_with_status_code.sh ${expected-status} ${subcommand}
 
 # Run complex_test
-build tests/complex_test.o: clang tests/complex_test.c
+build tests/complex_test.o: compile tests/complex_test.c
 
-build tests/complex_test: ld tests/complex_test.o lib/libc.a
+build tests/complex_test: link tests/complex_test.o lib/libc.a
 
 build run_complex_test: exit_with_status_code tests/complex_test
   subcommand = tests/complex_test
 
 # Run math_test
-build tests/math_test.o: clang tests/math_test.c
+build tests/math_test.o: compile tests/math_test.c
 
-build tests/math_test: ld tests/math_test.o lib/libc.a
+build tests/math_test: link tests/math_test.o lib/libc.a
 
 build run_math_test: exit_with_status_code tests/math_test
   subcommand = tests/math_test
 
 # Run stdlib_test
-build tests/stdlib_test.o: clang tests/stdlib_test.c
+build tests/stdlib_test.o: compile tests/stdlib_test.c
 
-build tests/stdlib_test: ld tests/stdlib_test.o lib/libc.a
+build tests/stdlib_test: link tests/stdlib_test.o lib/libc.a
 
 build run_stdlib_test: exit_with_status_code tests/stdlib_test
   subcommand = tests/stdlib_test
