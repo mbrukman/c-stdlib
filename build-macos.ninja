@@ -35,10 +35,5 @@ rule ar
 rule ld
   command = ld -arch x86_64 -e __start $in -lSystem -L${Xcode_UsrLib} -o $out
 
-build lib/complex.o: clang lib/complex.c
-build lib/crt0.o: clang lib/crt0.c
-build lib/math.o: clang lib/math.c
-build lib/stdlib.o: clang lib/stdlib.c
-build lib/libc.a: ar lib/complex.o lib/crt0.o lib/math.o lib/stdlib.o
-
+include libc.ninja
 include tests.ninja
