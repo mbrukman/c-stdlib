@@ -22,19 +22,45 @@
 #
 # Args:
 #   $1: status code to expect
+#   $2: file with expected stdout
+#   $3: file with expected stderr
 #   $*: command to execute
 
-declare -ir EXPECTED_STATUS_CODE="$1"
-shift
+declare -i status=0
 
-"$@"
+declare -ir EXPECTED_STATUS_CODE="$1"
+declare -r EXPECTED_STDOUT="$2"
+declare -r EXPECTED_STDERR="$3"
+shift 3
+
+declare -r TEMP_DIR="${TMPDIR:-${TMP:-/tmp}}"
+declare -r TEST_CMD="$(basename "$0")"
+
+declare -r ACTUAL_STDOUT="$(mktemp "${TEMP_DIR}/${TEST_CMD}.stdout.XXXXXX")"
+declare -r ACTUAL_STDERR="$(mktemp "${TEMP_DIR}/${TEST_CMD}.stderr.XXXXXX")"
+
+"$@" > "${ACTUAL_STDOUT}" 2> "${ACTUAL_STDERR}"
 declare -ir ACTUAL_STATUS_CODE="$?"
-if [[ ${EXPECTED_STATUS_CODE} -eq ${ACTUAL_STATUS_CODE} ]]; then
-  echo "PASSED"
-  exit 0
-else
-  echo "FAILED" >&2
+if [[ ${EXPECTED_STATUS_CODE} -ne ${ACTUAL_STATUS_CODE} ]]; then
   echo "Expected status code: ${EXPECTED_STATUS_CODE}" >&2
   echo "  Actual status code: ${ACTUAL_STATUS_CODE}" >&2
-  exit 1
+  status=1
 fi
+
+if ! diff -u "${EXPECTED_STDOUT}" "${ACTUAL_STDOUT}" ; then
+  echo "Found differences in stdout"
+  status=2
+fi
+
+if ! diff -u "${EXPECTED_STDERR}" "${ACTUAL_STDERR}" ; then
+  echo "Found differences in stderr"
+  status=3
+fi
+
+if [ ${status} -eq 0 ]; then
+  echo "PASSED"
+else
+  echo "FAILED"
+fi
+
+exit ${status}
