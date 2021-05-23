@@ -1,0 +1,36 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+expected-status = 0
+rule exit_with_status_code
+  command = tests/exit_with_status_code.sh ${expected-status} ${subcommand}
+
+# Run complex_test
+build tests/complex_test.o: clang tests/complex_test.c
+
+build tests/complex_test: ld tests/complex_test.o lib/libc.a
+
+build run_complex_test: exit_with_status_code tests/complex_test
+  subcommand = tests/complex_test
+
+# Run math_test
+build tests/math_test.o: clang tests/math_test.c
+
+build tests/math_test: ld tests/math_test.o lib/libc.a
+
+build run_math_test: exit_with_status_code tests/math_test
+  subcommand = tests/math_test
+
+# Run all tests
+build test: phony | run_complex_test run_math_test
