@@ -32,6 +32,24 @@ build tests/math_test: link tests/math_test.o lib/libc.a
 build run_math_test: exit_with_status_code tests/math_test
   subcommand = tests/math_test
 
+# Run stdlib_exit_42_test
+build tests/stdlib_exit_42_test.o: compile tests/stdlib_exit_42_test.c
+
+build tests/stdlib_exit_42_test: link tests/stdlib_exit_42_test.o lib/libc.a
+
+build run_stdlib_exit_42_test: exit_with_status_code tests/stdlib_exit_42_test
+  subcommand = tests/stdlib_exit_42_test
+  expected-status = 42
+
+# Run stdlib_return_42_test
+build tests/stdlib_return_42_test.o: compile tests/stdlib_return_42_test.c
+
+build tests/stdlib_return_42_test: link tests/stdlib_return_42_test.o lib/libc.a
+
+build run_stdlib_return_42_test: exit_with_status_code tests/stdlib_return_42_test
+  subcommand = tests/stdlib_return_42_test
+  expected-status = 42
+
 # Run stdlib_test
 build tests/stdlib_test.o: compile tests/stdlib_test.c
 
@@ -41,4 +59,4 @@ build run_stdlib_test: exit_with_status_code tests/stdlib_test
   subcommand = tests/stdlib_test
 
 # Run all tests
-build test: phony | run_complex_test run_math_test run_stdlib_test
+build test: phony | run_complex_test run_math_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test
