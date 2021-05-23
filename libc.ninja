@@ -12,19 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-libc = lib/include
-clang-args =
-clang-cflags = -fno-builtin -nostdlib -std=c99 -I$libc -Wall
-
-rule clang
-  depfile = $out.d
-  command = clang -O2 -MD -MF $out.d ${clang-cflags} ${clang-args} -c $in -o $out
-
-rule ar
-  command = ar -crs $out $in
-
-rule ld
-  command = ld $in -o $out
-
-include libc.ninja
-include tests.ninja
+build lib/complex.o: clang lib/complex.c
+build lib/crt0.o: clang lib/crt0.c
+build lib/math.o: clang lib/math.c
+build lib/stdlib.o: clang lib/stdlib.c
+build lib/libc.a: ar lib/complex.o lib/crt0.o lib/math.o lib/stdlib.o
