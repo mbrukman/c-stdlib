@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-build lib/complex.o: clang lib/complex.c
-build lib/crt0.o: clang lib/crt0.c
-build lib/math.o: clang lib/math.c
-build lib/stdlib.o: clang lib/stdlib.c
+build lib/complex.o: compile lib/complex.c
+build lib/crt0.o: compile lib/crt0.c
+build lib/math.o: compile lib/math.c
+build lib/stdlib.o: compile lib/stdlib.c
 build lib/libc.a: ar lib/complex.o lib/crt0.o lib/math.o lib/stdlib.o
