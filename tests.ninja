@@ -33,6 +33,14 @@ build tests/math_test: link tests/math_test.o lib/libc.a
 build run_math_test: run_test tests/math_test
   test = tests/math_test
 
+# Run stdio_test
+build tests/stdio_test.o: compile tests/stdio_test.c
+
+build tests/stdio_test: link tests/stdio_test.o lib/libc.a
+
+build run_stdio_test: run_test tests/stdio_test
+  test = tests/stdio_test
+
 # Run stdlib_exit_42_test
 build tests/stdlib_exit_42_test.o: compile tests/stdlib_exit_42_test.c
 
@@ -68,4 +76,4 @@ build run_string_test: run_test tests/string_test
   test = tests/string_test
 
 # Run all tests
-build test: phony | run_complex_test run_math_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test run_string_test
+build test: phony | run_complex_test run_math_test run_stdio_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test run_string_test
