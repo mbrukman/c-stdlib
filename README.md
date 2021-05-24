@@ -23,7 +23,7 @@ are [plenty of options][c-std-libs] to choose from.
 1. Install [Clang][llvm-download]; the LLVM project provides
    [APT repos][llvm-apt] for easy installation on Debian and Ubuntu.
 1. Install [Ninja][ninja].
-1. Build libc and run tests via: `ninja -f build-linux.ninja test`
+1. Build libc and run tests via: `ninja -f linux.ninja test`
 
 ### macOS
 
@@ -35,7 +35,7 @@ are [plenty of options][c-std-libs] to choose from.
    ```
 
 1. Install [Ninja][ninja].
-1. Build libc and run tests via: `ninja -f build-macos.ninja test`
+1. Build libc and run tests via: `ninja -f macos.ninja test`
 
 ## Contributing
 

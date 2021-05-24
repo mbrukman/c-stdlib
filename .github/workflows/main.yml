@@ -38,7 +38,7 @@ jobs:
         run: unzip ninja-linux.zip
 
       - name: Build and run tests
-        run: ./ninja -f build-linux.ninja test
+        run: ./ninja -f linux.ninja test
 
   macOS:
     runs-on: macos-10.15
@@ -60,4 +60,4 @@ jobs:
         run: unzip ninja-mac.zip
 
       - name: Build and run tests
-        run: ./ninja -f build-macos.ninja test
+        run: ./ninja -f macos.ninja test
