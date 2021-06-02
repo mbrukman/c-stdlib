@@ -1,6 +1,14 @@
 {
   "files.exclude": {
-      "*.a": true,
-      "*.o": true
+      "Xcode": true,
+
+      "**/*~": true,
+      "**/*.sw?": true,
+
+      "**/*.a": true,
+      "**/*.o": true,
+      "**/*.o.d": true,
+      ".ninja_*": true,
+      "tests/*_test": true
   }
 }

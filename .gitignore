@@ -2,8 +2,8 @@
 Xcode
 
 # Temporary editor files
-*.sw?
 *~
+*.sw?
 
 # Built outputs
 *.a
