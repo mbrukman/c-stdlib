@@ -49,7 +49,7 @@ jobs:
         run: clang --version
 
       - name: Download Ninja
-        run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-mac.zip
+        run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
 
       - name: Unzip Ninja
         run: unzip ninja-mac.zip
