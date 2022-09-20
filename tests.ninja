@@ -15,7 +15,7 @@
 expected-status = 0
 test =
 rule run_test
-  command = tests/run_test.sh ${expected-status} ${test}.out ${test}.err ${test}
+  command = tests/run_test.sh ${expected-status} tests/testdata/${test}_test.out tests/testdata/${test}_test.err tests/${test}_test
 
 # Run complex_test
 build tests/complex_test.o: compile tests/complex_test.c
@@ -23,7 +23,7 @@ build tests/complex_test.o: compile tests/complex_test.c
 build tests/complex_test: link tests/complex_test.o lib/libc.a
 
 build run_complex_test: run_test tests/complex_test
-  test = tests/complex_test
+  test = complex
 
 # Run math_test
 build tests/math_test.o: compile tests/math_test.c
@@ -31,7 +31,7 @@ build tests/math_test.o: compile tests/math_test.c
 build tests/math_test: link tests/math_test.o lib/libc.a
 
 build run_math_test: run_test tests/math_test
-  test = tests/math_test
+  test = math
 
 # Run stdio_test
 build tests/stdio_test.o: compile tests/stdio_test.c
@@ -39,7 +39,7 @@ build tests/stdio_test.o: compile tests/stdio_test.c
 build tests/stdio_test: link tests/stdio_test.o lib/libc.a
 
 build run_stdio_test: run_test tests/stdio_test
-  test = tests/stdio_test
+  test = stdio
 
 # Run stdlib_exit_42_test
 build tests/stdlib_exit_42_test.o: compile tests/stdlib_exit_42_test.c
@@ -47,7 +47,7 @@ build tests/stdlib_exit_42_test.o: compile tests/stdlib_exit_42_test.c
 build tests/stdlib_exit_42_test: link tests/stdlib_exit_42_test.o lib/libc.a
 
 build run_stdlib_exit_42_test: run_test tests/stdlib_exit_42_test
-  test = tests/stdlib_exit_42_test
+  test = stdlib_exit_42
   expected-status = 42
 
 # Run stdlib_return_42_test
@@ -56,7 +56,7 @@ build tests/stdlib_return_42_test.o: compile tests/stdlib_return_42_test.c
 build tests/stdlib_return_42_test: link tests/stdlib_return_42_test.o lib/libc.a
 
 build run_stdlib_return_42_test: run_test tests/stdlib_return_42_test
-  test = tests/stdlib_return_42_test
+  test = stdlib_return_42
   expected-status = 42
 
 # Run stdlib_test
@@ -65,7 +65,7 @@ build tests/stdlib_test.o: compile tests/stdlib_test.c
 build tests/stdlib_test: link tests/stdlib_test.o lib/libc.a
 
 build run_stdlib_test: run_test tests/stdlib_test
-  test = tests/stdlib_test
+  test = stdlib
 
 # Run string_test
 build tests/string_test.o: compile tests/string_test.c
@@ -73,7 +73,7 @@ build tests/string_test.o: compile tests/string_test.c
 build tests/string_test: link tests/string_test.o lib/libc.a
 
 build run_string_test: run_test tests/string_test
-  test = tests/string_test
+  test = string
 
 # Run all tests
 build test: phony | run_complex_test run_math_test run_stdio_test run_stdlib_exit_42_test run_stdlib_return_42_test run_stdlib_test run_string_test
