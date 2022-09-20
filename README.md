@@ -2,8 +2,8 @@
 
 [![Build Status][github-ci-badge]][github-ci-url]
 
-[github-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml/badge.svg
-[github-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml
+[github-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml/badge.svg?branch=main
+[github-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml?query=branch%3Amain
 
 This project aims to implement the C standard library.
 
@@ -28,11 +28,14 @@ are [plenty of options][c-std-libs] to choose from.
 ### macOS
 
 1. Install Xcode and accept the license agreement.
-1. Create a symlink pointing to the Xcode app in your Applications folder, e.g.:
+1. Create a symlink in this directory pointing to the Xcode app in your
+   `Applications` folder, e.g.:
 
    ```sh
-   $ ln -s /Applications/Xcode_12.4.app Xcode
+   $ ln -s /Applications/Xcode_12.5.app Xcode
    ```
+
+   See the comment in [`macos.ninja`](macos.ninja) for details and rationale.
 
 1. Install [Ninja][ninja].
 1. Build libc and run tests via: `ninja -f macos.ninja test`
