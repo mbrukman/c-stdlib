@@ -36,7 +36,7 @@ jobs:
         run: clang --version
 
       - name: Download Ninja
-        run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip
+        run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip
 
       - name: Unzip Ninja
         run: unzip ninja-linux.zip
