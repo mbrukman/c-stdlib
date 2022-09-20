@@ -22,8 +22,12 @@ on:
 
 jobs:
   Linux:
-    runs-on: ubuntu-20.04
-    name: "Ubuntu 20.04"
+    strategy:
+      matrix:
+        os: [ 'ubuntu-20.04', 'ubuntu-22.04' ]
+
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -41,14 +45,28 @@ jobs:
         run: ./ninja -f linux.ninja test
 
   macOS:
-    runs-on: macos-10.15
-    name: "macOS 10.15"
+    strategy:
+      matrix:
+        include:
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md#xcode
+          - os: 'macos-11'
+            xcode: '12.4'
+
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md#xcode
+          - os: 'macos-12'
+            xcode: '14.0'
+
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: List available Xcode versions
+        run: ls -l /Applications/Xcode_*.app
+
       - name: Create symlink to Xcode
-        run: ln -s /Applications/Xcode_12.4.app Xcode
+        run: ln -s /Applications/Xcode_${{ matrix.xcode }}.app Xcode
 
       - name: Show Clang version
         run: clang --version
