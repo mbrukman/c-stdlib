@@ -1,9 +1,11 @@
 # C standard library
 
-[![Build Status][github-ci-badge]][github-ci-url]
+[![Linux build status][linux-ci-badge]][linux-ci-url] [![macOS build status][macos-ci-badge]][macos-ci-url]
 
-[github-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml/badge.svg?branch=main
-[github-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/main.yml?query=branch%3Amain
+[linux-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/linux.yml/badge.svg?branch=main
+[linux-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/linux.yml?query=branch%3Amain
+[macos-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/macos.yml/badge.svg?branch=main
+[macos-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/macos.yml?query=branch%3Amain
 
 This project aims to implement the C standard library.
 

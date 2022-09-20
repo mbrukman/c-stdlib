@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: "Build & test"
+name: macOS
 
 on:
   push:
@@ -21,30 +21,7 @@ on:
     branches: [ main ]
 
 jobs:
-  Linux:
-    strategy:
-      matrix:
-        os: [ 'ubuntu-20.04', 'ubuntu-22.04' ]
-
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Show Clang version
-        run: clang --version
-
-      - name: Download Ninja
-        run: curl -OL https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip
-
-      - name: Unzip Ninja
-        run: unzip ninja-linux.zip
-
-      - name: Build and run tests
-        run: ./ninja -f linux.ninja test
-
-  macOS:
+  Build-and-test:
     strategy:
       matrix:
         include:
