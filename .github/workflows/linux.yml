@@ -14,11 +14,36 @@
 
 name: Linux
 
+# GitHub Actions does not support anchors:
+# https://github.com/actions/runner/issues/1182
+# so we need to duplicate paths below and manually keep them in sync.
 on:
   push:
     branches: [ main ]
+    paths:
+        # Source code and build rules
+      - 'lib/**'
+      - 'libc.ninja'
+        # Test code and build rules
+      - 'tests/**'
+      - 'tests.ninja'
+        # Linux-specific build rules and configs
+      - 'linux.ninja'
+      - '.github/workflows/linux.yml'  # this file
+
   pull_request:
     branches: [ main ]
+    paths:
+        # Source code and build rules
+      - 'lib/**'
+      - 'libc.ninja'
+        # Test code and build rules
+      - 'tests/**'
+      - 'tests.ninja'
+        # Linux-specific build rules and configs
+      - 'linux.ninja'
+      - '.github/workflows/linux.yml'  # this file
+
   schedule:
     # Run at 08:08 on the 1st day of each month
     - cron: '8 8 1 * *'
