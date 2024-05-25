@@ -28,13 +28,27 @@ jobs:
     strategy:
       matrix:
         include:
-          # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md#xcode
-          - os: 'macos-11'
-            xcode: '12.4'
-
           # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md#xcode
           - os: 'macos-12'
-            xcode: '14.0'
+            xcode: '14.2'
+
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-13-Readme.md#xcode
+          - os: 'macos-13'
+            xcode: '14.3.1'
+
+          # This doesn't work yet: https://github.com/mbrukman/c-stdlib/actions/runs/9232092640/job/25402865386?pr=30
+          #
+          # lib/stdio.c:151:11: error: invalid output constraint '=a' in asm
+          #         : "=a" (ret)
+          #           ^
+          #
+          # lib/stdlib.c:184:11: error: invalid input constraint 'a' in asm
+          #         : "a" (sys_exit), "D" (status)
+          #           ^
+          #
+          # https://github.com/actiacos/macos-14-Readme.md#xcode
+          # - os: 'macos-14'
+          #   xcode: '14.3.1'
 
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
