@@ -7,7 +7,7 @@
 [macos-ci-badge]: https://github.com/mbrukman/c-stdlib/actions/workflows/macos.yml/badge.svg?branch=main
 [macos-ci-url]: https://github.com/mbrukman/c-stdlib/actions/workflows/macos.yml?query=branch%3Amain
 
-This project aims to implement the C standard library.
+This project aims to implement the C standard library, per the C99 standard.
 
 **Note:** This library is a work-in-progress and is not intended for production
 use. If you are looking for a C standard library for use in production, there
