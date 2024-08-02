@@ -75,7 +75,9 @@ jobs:
           # - os: 'macos-14'
           #   xcode: '14.3.1'
 
-    name: ${{ matrix.os }}
+    # Not including "macOS" explicitly as a prefix since it's already the prefix
+    # of ${{ matrix.os }} and is duplicative, and hides the Xcode version in UI.
+    name: ${{ matrix.os }} with Xcode (${{ matrix.xcode }})
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo
