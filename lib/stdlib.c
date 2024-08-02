@@ -14,6 +14,8 @@
 
 #include <stdlib.h>
 
+#include <stdbool.h>
+
 ////////////////////////////////////////////////////////////////////////////////
 // 7.20.1 Numeric conversion functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,16 +25,16 @@ double atof(const char *nptr);
 
 // 7.20.1.2 The atoi, atol, and atoll functions
 int atoi(const char *nptr) {
-  int negative = 0;
+  bool negative = false;
   int value = 0;
 
   if (nptr[0] == '-') {
-    negative = 1;
+    negative = true;
     ++nptr;
   }
 
   while (nptr != NULL) {
-    int digit = 0;
+    unsigned char digit = 0;
     if ('0' <= *nptr && *nptr <= '9') {
       digit = *nptr - '0';
     } else {
@@ -46,16 +48,16 @@ int atoi(const char *nptr) {
 }
 
 long int atol(const char *nptr) {
-  int negative = 0;
+  bool negative = false;
   long int value = 0;
 
   if (nptr[0] == '-') {
-    negative = 1;
+    negative = true;
     ++nptr;
   }
 
   while (nptr != NULL) {
-    int digit = 0;
+    unsigned char digit = 0;
     if ('0' <= *nptr && *nptr <= '9') {
       digit = *nptr - '0';
     } else {
@@ -69,7 +71,7 @@ long int atol(const char *nptr) {
 }
 
 long long int atoll(const char *nptr) {
-  int negative = 0;
+  bool negative = false;
   long long int value = 0;
 
   if (nptr[0] == '-') {
@@ -78,7 +80,7 @@ long long int atoll(const char *nptr) {
   }
 
   while (nptr != NULL) {
-    int digit = 0;
+    unsigned char digit = 0;
     if ('0' <= *nptr && *nptr <= '9') {
       digit = *nptr - '0';
     } else {
