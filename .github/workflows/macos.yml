@@ -71,7 +71,7 @@ jobs:
           #         : "a" (sys_exit), "D" (status)
           #           ^
           #
-          # https://github.com/actiacos/macos-14-Readme.md#xcode
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md#xcode
           # - os: 'macos-14'
           #   xcode: '14.3.1'
 
