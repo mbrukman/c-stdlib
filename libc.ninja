@@ -14,6 +14,7 @@
 
 build lib/complex.o: compile lib/complex.c
 build lib/crt0.o: compile lib/crt0.c
+build lib/errno.o: compile lib/errno.c
 build lib/math.o: compile lib/math.c
 build lib/stdio.o: compile lib/stdio.c
 build lib/stdlib.o: compile lib/stdlib.c
