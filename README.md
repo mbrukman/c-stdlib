@@ -9,9 +9,10 @@
 
 This project aims to implement the C standard library, per the C99 standard.
 
-**Note:** This library is a work-in-progress and is not intended for production
-use. If you are looking for a C standard library for use in production, there
-are [plenty of options][c-std-libs] to choose from.
+> [!WARNING]
+> This library is a personal learning project and is not intended for production
+> use. If you are looking for a C standard library for use in production, there
+> are [plenty of options][c-std-libs] to choose from.
 
 ## References
 
