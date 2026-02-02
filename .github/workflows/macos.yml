@@ -53,31 +53,15 @@ jobs:
     strategy:
       matrix:
         include:
-          # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md#xcode
-          - os: 'macos-12'
-            xcode: '14.2'
-
-          # https://github.com/actions/runner-images/blob/main/images/macos/macos-13-Readme.md#xcode
-          - os: 'macos-13'
-            xcode: '14.3.1'
-
-          # This doesn't work yet: https://github.com/mbrukman/c-stdlib/actions/runs/9232092640/job/25402865386?pr=30
-          #
-          # lib/stdio.c:151:11: error: invalid output constraint '=a' in asm
-          #         : "=a" (ret)
-          #           ^
-          #
-          # lib/stdlib.c:184:11: error: invalid input constraint 'a' in asm
-          #         : "a" (sys_exit), "D" (status)
-          #           ^
-          #
-          # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md#xcode
-          # - os: 'macos-14'
-          #   xcode: '14.3.1'
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md#xcode
+          - os: 'macos-15-intel'
+            xcode: '26.2'
+          - os: 'macos-15-intel'
+            xcode: '16.4'
 
     # Not including "macOS" explicitly as a prefix since it's already the prefix
     # of ${{ matrix.os }} and is duplicative, and hides the Xcode version in UI.
-    name: ${{ matrix.os }} with Xcode (${{ matrix.xcode }})
+    name: ${{ matrix.os }} with Xcode ${{ matrix.xcode }}
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo
